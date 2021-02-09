@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
 #############################################
 # GENERAL
 #############################################
@@ -15,7 +16,6 @@ def grab_col_names(dataframe, cat_th=10, car_th=20):
     :param car_th:
     :return:
     """
-
 
     cat_cols = [col for col in dataframe.columns if dataframe[col].dtypes == "O"]
 
@@ -46,8 +46,6 @@ def grab_col_names(dataframe, cat_th=10, car_th=20):
     return cat_cols, cat_but_car, num_cols, num_but_cat
 
 
-
-
 #############################################
 # CATEGORICAL
 #############################################
@@ -76,7 +74,6 @@ def num_summary(dataframe, numerical_col, plot=False):
         plt.show()
 
 
-
 #############################################
 # TARGET
 #############################################
@@ -87,3 +84,56 @@ def target_summary_with_cat(dataframe, target, categorical_col):
 
 def target_summary_with_num(dataframe, target, numerical_col):
     print(dataframe.groupby(target).agg({numerical_col: "mean"}), end="\n\n\n")
+
+
+#############################################
+#
+#############################################
+df = sns.load_dataset("tips")
+
+
+def ahmet_simge_mustafa_yeni_fonksiyon(dataframe, num_cols, y):
+
+    """
+
+    Parameters
+    ----------
+    Scatter plot of numerical variables by target variable and Descriptive stats
+
+    dataframe: Pandas DataFrame
+
+    num_cols: Numerical variables
+
+    y: target
+
+    Returns
+    -------
+
+    Examples
+    -------
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+
+    df = sns.load_dataset("tips")
+
+    ahmet_simge_mustafa_yeni_fonksiyon(df, num_cols, "total_bill")
+
+    # num_cols : ["tip"]
+    """
+    print("##################### Info #####################")
+    print(dataframe.info())
+    print("##################### Quantiles #####################")
+    print(dataframe.quantile([0, 0.05, 0.50, 0.95, 0.99, 1]).T)
+
+    col = 0
+    for i in num_cols:
+        sns.scatterplot(x=i, y=y, data=dataframe)
+        plt.xlabel(i)
+        plt.title(i)
+        plt.show()
+        col += 1
+    print(f"{col} variables have been plotted")
+
+
+
